@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+out_file = File.new("/home/michael/out.txt", "w")
+#...
+
+#...
+
+
+ARGV.each do|a|
+    out_file.puts("Argument: #{a}")
+end
+
+sleep(10)
+
+puts "Another Success!"
+
+out_file.close
