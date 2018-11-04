@@ -1,21 +1,13 @@
-require 'net/http'
-require 'uri'
+require 'rest-client'
 require 'pry'
+require 'json'
 
-uri = URI('https://jsonplaceholder.typicode.com/todos')
+file = File.read('environment.json')
+environment = JSON.parse(file)
+token = environment["token"]
 
-req = Net::HTTP::Post.new(uri)
-req.set_form_data('from' => '2005-01-01', 'to' => '2005-03-31')
-
-res = Net::HTTP.start(uri.hostname, uri.port, :use_ssl => true) do |http|
-  http.request(req)
-end
+payload = { name: "blog" }
+headers = { params: {access_token: token} }
+res = RestClient.post('https://api.github.com/user/repos', payload.to_json, headers)
 
 binding.pry
-
-# case res
-# when Net::HTTPSuccess, Net::HTTPRedirection
-#   # OK
-# else
-#   res.value
-# end
